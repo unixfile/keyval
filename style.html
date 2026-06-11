@@ -1,0 +1,45 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&display=swap">
+<style>
+@font-face {
+  font-family: Iosevka;
+  src: url(iosevka-regular.woff2) format("woff2");
+}
+code, pre { font-family: Iosevka, monospace; }
+html { background: #f6f6f6; }
+body {
+  max-width: 58ch;
+  margin: 2em auto;
+  background: #f6f6f6;
+  color: #1a1a1a;
+  font-family: "STIX Two Text", Georgia, serif;
+  font-size: clamp(16px, 3.0vw, 38px);
+  line-height: 1.2;
+  text-align: justify;
+  hyphens: auto;
+  padding: 0 1em;
+}
+p { margin: 0.7em 0; }
+#title-block-header { margin: 0 0 0.2em 0; }
+h1.title { margin: 0; font-size: 1.6em; }
+h1, h2, h3, h4, h5, h6 {
+  font-family: "STIX Two Text", Georgia, serif;
+  font-weight: bold;
+  text-align: left;
+  hyphens: none;
+  margin-top: 0.7em;
+  margin-bottom: 0.2em;
+}
+h1 { font-size: 1.3em; }
+h2 { font-size: 1.1em; }
+h3 { font-size: 1em; font-style: italic; font-weight: normal; }
+h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p { margin-top: 0.1em; }
+blockquote {
+  margin: 1.2em 0 1.2em 2em;
+  padding-left: 1em;
+  border-left: 2px solid currentColor;
+  opacity: 0.75;
+}
+@media (pointer: coarse), (max-width: 768px) {
+  body { max-width: 100%; }
+}
+</style>
