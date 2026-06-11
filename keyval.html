@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>keyval</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&display=swap">
+  <style>
+  @font-face {
+    font-family: Iosevka;
+    src: url(iosevka-regular.woff2) format("woff2");
+  }
+  code, pre { font-family: Iosevka, monospace; }
+  html { background: #f6f6f6; }
+  body {
+    max-width: 58ch;
+    margin: 2em auto;
+    background: #f6f6f6;
+    color: #1a1a1a;
+    font-family: "STIX Two Text", Georgia, serif;
+    font-size: clamp(16px, 3.0vw, 38px);
+    line-height: 1.2;
+    text-align: justify;
+    hyphens: auto;
+    padding: 0 1em;
+  }
+  p { margin: 0.7em 0; }
+  #title-block-header { margin: 0 0 0.2em 0; }
+  h1.title { margin: 0; font-size: 1.6em; }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "STIX Two Text", Georgia, serif;
+    font-weight: bold;
+    text-align: left;
+    hyphens: none;
+    margin-top: 0.7em;
+    margin-bottom: 0.2em;
+  }
+  h1 { font-size: 1.3em; }
+  h2 { font-size: 1.1em; }
+  h3 { font-size: 1em; font-style: italic; font-weight: normal; }
+  h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p { margin-top: 0.1em; }
+  blockquote {
+    margin: 1.2em 0 1.2em 2em;
+    padding-left: 1em;
+    border-left: 2px solid currentColor;
+    opacity: 0.75;
+  }
+  @media (pointer: coarse), (max-width: 768px) {
+    body { max-width: 100%; }
+  }
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">keyval</h1>
+</header>
+<p>A minimal key-value format for flat pairs and implicit trees via
+dotted paths.</p>
+<p>File extension: <code>.kv</code></p>
+<h2 id="syntax">Syntax</h2>
+<p>Files are UTF-8. Every line ends with LF, including the last. The
+file may be empty.</p>
+<p>The first line may begin with <code>#</code>; its content is
+unspecified. No other line may begin with <code>#</code>.</p>
+<p>Empty lines are not permitted. No line may end in a space. A line is
+either a value pair or a marker:</p>
+<pre><code>key value
+key</code></pre>
+<p>In a value pair, the key ends at the first space and the value is the
+rest of the line. The value may itself begin with spaces.</p>
+<p>In a marker, the key stands alone with no space. It declares an empty
+node at that path.</p>
+<h2 id="keys">Keys</h2>
+<p>A key is a dotted path of one or more segments:</p>
+<pre><code>segment[.segment]*</code></pre>
+<p>A segment is either a name or an index. The first character decides:
+a letter starts a name, a digit starts an index.</p>
+<p>A name matches <code>[a-z][a-z0-9_]*</code>: a lowercase letter
+followed by lowercase letters, digits or underscores. Uppercase letters
+are not permitted.</p>
+<p>An index matches <code>[0-9]+</code>: one or more digits. Its value
+is the denoted integer. Leading zeros are padding.</p>
+<h2 id="tree-structure">Tree structure</h2>
+<p>The dotted path defines a tree implicitly. A node holds children
+keyed by name or by index, and both kinds may appear under the same
+node. Named children form an associative array. Indexed children form an
+ordered sequence.</p>
+<p>A node may not be both a leaf and a branch. A leaf carries a value; a
+branch has children. Mixing them is a parse error.</p>
+<h2 id="markers">Markers</h2>
+<p>A marker asserts that a node exists at the given path and is
+currently empty. A marker alongside children under the same path is a
+parse error. An append may leave a stale marker behind, just as it
+leaves lines out of order; a normalizing pass repairs both. An appended
+file does not parse until normalized.</p>
+<p>A marker whose last segment is an index counts toward the parent’s
+sequence like any other indexed child.</p>
+<p>A marker declares an empty node, not an empty value. An empty value
+is a value pair written with <code>\0</code>.</p>
+<h2 id="sequences">Sequences</h2>
+<p>The indexed children of a node must have consecutive values starting
+from 0. Leaves, branches and markers all count.</p>
+<p>Within a sequence, every index is written with the same width.
+Writing <code>x.0</code> and <code>x.01</code> in the same sequence is a
+parse error. The width may exceed what the count requires; a short
+sequence written <code>00</code>, <code>01</code> can grow to 100 items
+without rewriting earlier lines.</p>
+<h2 id="ordering">Ordering</h2>
+<p>Files must be sorted in strict lexicographic order on the full key
+string. Out-of-order lines are a parse error. Strictness also forbids
+duplicate keys.</p>
+<p>The sort is not numeric-aware. Uniform index width is what keeps
+sequences in order: equal-width index strings sort numerically. A
+sequence that outgrows its width must be rewritten one digit wider,
+<code>0</code> through <code>9</code> becoming <code>00</code> through
+<code>10</code> at the 11th item.</p>
+<p>Digits sort before letters, so indexed children precede named
+children under the same node. The dot sorts before every segment
+character, so a subtree always forms one contiguous block of lines.</p>
+<h2 id="values">Values</h2>
+<p>Backslash escape sequences:</p>
+<table>
+<thead>
+<tr>
+<th>Sequence</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\\</code></td>
+<td>Literal backslash</td>
+</tr>
+<tr>
+<td><code>\n</code></td>
+<td>Newline</td>
+</tr>
+<tr>
+<td><code>\t</code></td>
+<td>Horizontal tab</td>
+</tr>
+<tr>
+<td><code>\r</code></td>
+<td>Carriage return</td>
+</tr>
+<tr>
+<td><code>\0</code></td>
+<td>End-of-value marker; lets a value end in spaces</td>
+</tr>
+</tbody>
+</table>
+<p>A backslash followed by any other character is a parse error.</p>
+<p>A value must not contain raw control characters. Newline, tab and
+carriage return are written as escapes; other control characters cannot
+be represented.</p>
+<p><code>\0</code> may appear only at the end of a value; elsewhere it
+is a parse error. Since no line may end in a space, <code>\0</code> is
+how empty values and trailing spaces are written: <code>key \0</code>
+holds the empty value, and <code>key two words \0</code> holds
+<code>two words</code> followed by one space. Meaning beyond delimiting
+the value is left to tools and derived formats.</p>
+<h2 id="example">Example</h2>
+<pre><code>build.00 ./configure --prefix=/usr
+build.01 make
+build.parallel yes
+person.0.email \0
+person.0.name Charles Ingvar Jönsson
+person.1.name Anna
+planets</code></pre>
+<p><code>person.0.email</code> holds an empty value;
+<code>planets</code> declares an empty node. <code>build</code> pads its
+indices to leave room for growth, <code>person</code> does not; width is
+a per-sequence choice.</p>
+</body>
+</html>
