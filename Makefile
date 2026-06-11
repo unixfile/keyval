@@ -29,6 +29,7 @@ $(BUILDDIR)/keyval-a4.typ: $(SRC)
 	{ printf '#set text(font: ("STIX Two Text", "Iosevka"), size: 12pt)\n'; \
 	  printf '#set page(paper: "a4", margin: (x: 47mm, y: 15mm))\n'; \
 	  printf '#set par(justify: true)\n\n'; \
+	  printf '= keyval\n\n'; \
 	  pandoc -f markdown -t typst $<; \
 	} > $@
 
@@ -37,6 +38,7 @@ $(BUILDDIR)/keyval-screen.typ: $(SRC)
 	{ printf '#set text(font: ("STIX Two Text", "Iosevka"), size: 12pt)\n'; \
 	  printf '#set page(width: 133mm, height: 280mm + 8pt, margin: (x: 8mm, y: 8mm))\n'; \
 	  printf '#set par(justify: true)\n\n'; \
+	  printf '= keyval\n\n'; \
 	  pandoc -f markdown -t typst $<; \
 	} > $@
 
