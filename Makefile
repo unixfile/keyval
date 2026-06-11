@@ -1,5 +1,6 @@
 # Build: make
-# Docker: docker build -t keyval . && docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/work" keyval make
+# Docker (pull): docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/work" ghcr.io/unixfile/keyval make
+# Docker (build): docker build -t keyval . && docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/work" keyval make
 
 BUILDDIR = build
 SRC      = keyval.md
