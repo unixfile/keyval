@@ -28,4 +28,4 @@ planets
 
 ## Implementations
 
-- [unixfile/kv](https://github.com/unixfile/kv) — Go
+- [unixfile/kv](https://github.com/unixfile/kv) (Go)
