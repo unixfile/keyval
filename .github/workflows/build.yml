@@ -12,7 +12,7 @@ jobs:
       packages: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Build image
         run: |
@@ -23,7 +23,7 @@ jobs:
       - name: Build
         run: docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/work" ghcr.io/${{ github.repository }} make
 
-      - uses: docker/login-action@v3
+      - uses: docker/login-action@v4
         if: ${{ !env.ACT }}
         with:
           registry: ghcr.io
