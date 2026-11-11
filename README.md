@@ -1,6 +1,6 @@
 # keyval
 
-keyval is a plain-text format for flat key-value pairs and trees. Keys are dotted paths; values are the rest of the line. Files are lexicographically sorted, making output deterministic and diffs noise-free. There is no quoting and no type system. The full grammar fits on a page.
+keyval is a plain-text format for flat key-value pairs and trees. Keys are dotted paths; values are the rest of the line. Files are sorted byte by byte, making output deterministic and diffs noise-free. There is no quoting and no type system. The full grammar fits on a page.
 
 File extension: `.kv`
 

@@ -1,6 +1,6 @@
 ---
 title: keyval
-version: 1.0
+version: 1.1
 ---
 
 A minimal key-value format for flat pairs and implicit trees via dotted paths.
@@ -34,9 +34,11 @@ segment[.segment]*
 
 A segment is either a name or an index. The first character decides: a letter starts a name, a digit starts an index.
 
-A name matches `[a-z][a-z0-9_]*`: a lowercase letter followed by lowercase letters, digits or underscores. Uppercase letters are not permitted.
+A name matches `[A-Za-z][A-Za-z0-9_]*`: a letter followed by letters, digits or underscores. Case counts: `Web` and `web` are different names. Uppercase letters are permitted from version 1.1.
 
 An index matches `[0-9]+`: one or more digits. Its value is the denoted integer. Leading zeros are padding.
+
+The alphabet is chosen for the sort. Every character a segment may hold, the letters and the digits and the underscore, sorts above the dot that separates segments. That is what keeps a subtree contiguous and puts a node's own lines ahead of any sibling whose name extends it. A hyphen sorts below the dot, so `web-small.cores` would come before `web.cores` and a file sorted by eye would be out of order to the parser; write a hyphenated name, a hostname above all, with underscores. Uppercase passes the same test, and its cost is cosmetic: it sorts below both the underscore and the lowercase letters, so `Web` and `web` do not sit together.
 
 ## Tree structure
 
@@ -60,7 +62,7 @@ Within a sequence, every index is written with the same width. Writing `x.0` and
 
 ## Ordering
 
-Files must be sorted in strict lexicographic order on the full key string. Out-of-order lines are a parse error. Strictness also forbids duplicate keys.
+Files must be sorted in strict lexicographic order on the full key string, compared byte by byte. Locale collation is not used, and the difference is not academic: a locale that skips punctuation on its first pass calls an out-of-order file sorted. `LC_ALL=C sort` is the ordering this section describes. Out-of-order lines are a parse error. Strictness also forbids duplicate keys.
 
 The sort is not numeric-aware. Uniform index width is what keeps sequences in order: equal-width index strings sort numerically. A sequence that outgrows its width must be rewritten one digit wider, `0` through `9` becoming `00` through `10` at the 11th item.
 
