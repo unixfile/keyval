@@ -241,11 +241,22 @@ node at that path.</p>
 <pre><code>segment[.segment]*</code></pre>
 <p>A segment is either a name or an index. The first character decides:
 a letter starts a name, a digit starts an index.</p>
-<p>A name matches <code>[a-z][a-z0-9_]*</code>: a lowercase letter
-followed by lowercase letters, digits or underscores. Uppercase letters
-are not permitted.</p>
+<p>A name matches <code>[A-Za-z][A-Za-z0-9_]*</code>: a letter followed
+by letters, digits or underscores. Case counts: <code>Web</code> and
+<code>web</code> are different names. Uppercase letters are permitted
+from version 1.1.</p>
 <p>An index matches <code>[0-9]+</code>: one or more digits. Its value
 is the denoted integer. Leading zeros are padding.</p>
+<p>The alphabet is chosen for the sort. Every character a segment may
+hold, the letters and the digits and the underscore, sorts above the dot
+that separates segments. That is what keeps a subtree contiguous and
+puts a node’s own lines ahead of any sibling whose name extends it. A
+hyphen sorts below the dot, so <code>web-small.cores</code> would come
+before <code>web.cores</code> and a file sorted by eye would be out of
+order to the parser; write a hyphenated name, a hostname above all, with
+underscores. Uppercase passes the same test, and its cost is cosmetic:
+it sorts below both the underscore and the lowercase letters, so
+<code>Web</code> and <code>web</code> do not sit together.</p>
 <h2 id="tree-structure">Tree structure</h2>
 <p>The dotted path defines a tree implicitly. A node holds children
 keyed by name or by index, and both kinds may appear under the same
@@ -273,8 +284,11 @@ sequence written <code>00</code>, <code>01</code> can grow to 100 items
 without rewriting earlier lines.</p>
 <h2 id="ordering">Ordering</h2>
 <p>Files must be sorted in strict lexicographic order on the full key
-string. Out-of-order lines are a parse error. Strictness also forbids
-duplicate keys.</p>
+string, compared byte by byte. Locale collation is not used, and the
+difference is not academic: a locale that skips punctuation on its first
+pass calls an out-of-order file sorted. <code>LC_ALL=C sort</code> is
+the ordering this section describes. Out-of-order lines are a parse
+error. Strictness also forbids duplicate keys.</p>
 <p>The sort is not numeric-aware. Uniform index width is what keeps
 sequences in order: equal-width index strings sort numerically. A
 sequence that outgrows its width must be rewritten one digit wider,
